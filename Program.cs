@@ -56,32 +56,22 @@ namespace Cadenas
         private static void FormateadorDigitos()
         {
             Console.WriteLine("Introduce el dígito a rellenar con 0 hasta 12 caracteres.");
-            string digito = Console.ReadLine();
-            bool todoDigitos = true;
-            int contador = 0;
-            while(todoDigitos && contador<digito.Length)
+            string cadenaNum = Console.ReadLine();
+            int digito;
+            while(!int.TryParse(cadenaNum,out digito))
             {
-                if (!char.IsDigit(digito[contador])) todoDigitos = false;
-                else contador++;
+                Console.WriteLine("Eso no es un número, introduce otro.");
+                cadenaNum = Console.ReadLine();
             }
-            if (digito.Length >= 12)
-            {
-                Console.WriteLine("No hay hueco para ningún 0.");
-            }
-            else if (!todoDigitos)
-            {
-                Console.WriteLine("Parece que no todo son dígitos.");
-            } else while (digito.Length < 12)
-                {
-                    digito = "0" + digito;
-                }
-            Console.WriteLine($"Resultado: {digito}");
+            cadenaNum = cadenaNum.PadLeft(12, '0');
+            Console.WriteLine($"Resultado: {cadenaNum}");
         }
 
         private static void ComienzaPor(string texto)
         {
             Console.WriteLine("Introduzca el texto a buscar en el inicio");
             string textoBusqueda = Console.ReadLine();
+            //TODO Usar el método StartsWith mejor.
             if (texto.IndexOf(textoBusqueda) == 0)
             {
                 Console.WriteLine("La cadena comienza con el texto especificado.");
@@ -117,6 +107,7 @@ namespace Cadenas
         {
             Console.WriteLine("Introduzca la palabra a sustituir, un espacio y la sustituta");
             string cadenappal = Console.ReadLine();
+            //TODO Utilizar la función Split
             if (cadenappal.IndexOf(' ') != -1)
             {
                 string sustituir = cadenappal.Substring(0, cadenappal.IndexOf(' '));
